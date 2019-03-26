@@ -90,36 +90,20 @@ try{
     if(!$id){
         throw new Exception("You should specify ID of food");
     }
-
-    $recipes = $food->fetchRecipesById($id);
-    $Data = $food->fetchById($id);
     $steps = $food->fetchSteps($id);
-    $stepsCount = $Data->rowCount();
+    $res_count = $steps->rowCount();
+    if(!$res_count){
+        throw new Exception("No steps found !");
+    }
+    $resultList = array();
+    $resultList["body"] = array();
+    $resultList["body"]["count"] = $res_count;
 
-    $count = $Data->rowCount();
-    if(!$count){
-        throw new Exception("No result found !");
-    }
-    $foodData = array();
-    $foodData["body"] = array();
-    $foodData["body"]["recipes"] = array();
-    $foodData["body"]["data"] = array();
-    $foodData["body"]["steps"] = array();
-
-    while ($row = $Data->fetch(PDO::FETCH_ASSOC)) {
-        extract($row);
-        $foodData["body"]["data"]["FOOD_ID"] = $FOOD_ID;
-        $foodData["body"]["data"]["FOOD_NAME"] = $FOOD_NAME;
-        $foodData["body"]["data"]["CATEGORY_NAME"] = $CATEGORY_NAME;
-        $foodData["body"]["data"]["CATEGORY_ID"] = $CATEGORY_ID;
-    }
-    while ($row = $recipes->fetch(PDO::FETCH_ASSOC)) {
-        array_push($foodData["body"]["recipes"], $row);
-    }
     while ($row = $steps->fetch(PDO::FETCH_ASSOC)) {
-        array_push($foodData["body"]["steps"], $row);
+        array_push($resultList["body"], $row);
     }
-    echo json_encode($foodData);
+
+    echo json_encode($resultList);
 
 }catch (Exception $e){
     array_push($error, $e->getMessage());

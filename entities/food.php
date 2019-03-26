@@ -10,7 +10,11 @@ class food
 {
 
     // Specify the table name
-    private $table = "foods";
+    private $food_table = "foods";
+    private $categories_table = "categories";
+    private $recipes_table = "recipes";
+    private $recipe_and_food_table = "recipe_and_food";
+    private $steps_table = "steps";
 
     //
     public $id;
@@ -31,11 +35,11 @@ class food
             FROM
                 recipe_and_food AS rf
                     INNER JOIN
-                foods AS f ON f.FOOD_ID = rf.FOOD_ID
+                $this->food_table AS f ON f.FOOD_ID = rf.FOOD_ID
                     INNER JOIN
-                categories AS c ON c.CATEGORY_ID = f.CATEGORY_ID
+                $this->categories_table AS c ON c.CATEGORY_ID = f.CATEGORY_ID
                     INNER JOIN
-                recipes AS r ON r.RECIPE_ID = rf.RECIPE_ID
+                $this->recipes_table AS r ON r.RECIPE_ID = rf.RECIPE_ID
             WHERE
                 f.FOOD_ID = $id
             ";
@@ -49,12 +53,65 @@ class food
             SELECT 
                 f.FOOD_ID,f.FOOD_NAME,c.CATEGORY_NAME,c.CATEGORY_ID
             FROM
-                foods as f
+                $this->food_table as f
                 INNER JOIN 
-                categories as c ON f.CATEGORY_ID = c.CATEGORY_ID
+                $this->categories_table as c ON f.CATEGORY_ID = c.CATEGORY_ID
             WHERE
                 FOOD_ID = $id
             ";
+        $result = $this->connection->prepare($query);
+        $result->execute();
+        return $result;
+    }
+    public function searchFood($recipes,$categories)
+    {
+        $where = '';
+        if($recipes){
+            $where .= "rf.RECIPE_ID in ".$recipes . "AND ";
+        }
+        if($categories){
+            $where .= "c.CATEGORY_ID IN ".$categories."AND ";
+        }
+        $where .= '1=1';
+        $query = "
+            SELECT 
+                f.FOOD_ID,
+                f.FOOD_NAME,
+                f.RECIPE_COUNT,
+                c.CATEGORY_NAME,
+                c.CATEGORY_ID,
+                COUNT(rf.RECIPE_ID) AS COUNT,
+                (ROUND((COUNT(rf.RECIPE_ID)/f.RECIPE_COUNT)*100,2)) AS PERCENTAGE
+            FROM
+                $this->food_table AS f
+                    INNER JOIN
+                $this->categories_table AS c ON c.CATEGORY_ID = f.CATEGORY_ID
+                    INNER JOIN
+                $this->recipe_and_food_table AS rf ON rf.FOOD_ID = f.FOOD_ID
+            WHERE
+                $where
+            GROUP BY f.FOOD_ID
+            order by PERCENTAGE DESC
+            ";
+
+        $result = $this->connection->prepare($query);
+        $result->execute();
+        return $result;
+    }
+    public function fetchSteps($id)
+    {
+
+        $query = "
+            SELECT 
+                s.STEP_ORDER,s.STEP_TEXT
+            FROM
+                $this->steps_table AS s
+                    INNER JOIN
+                $this->food_table AS f ON f.FOOD_ID = s.FOOD_ID
+                where f.FOOD_ID = $id
+                order by s.STEP_ORDER ASC
+            ";
+
         $result = $this->connection->prepare($query);
         $result->execute();
         return $result;
