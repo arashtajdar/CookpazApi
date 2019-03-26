@@ -1,0 +1,252 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "PHP SAMPLE API",
+        "description": "This is a sample php api for Erply assignment",
+        "contact": {
+            "email": "arashtajdar@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/samplePhpApi/products/create.php?id={id}&name={name}&price={price}": {
+            "get": {
+                "tags": [
+                    "products"
+                ],
+                "summary": "add new product",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "new name for this product",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "price",
+                        "in": "path",
+                        "description": "new price for this product",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "404": {
+                        "description": "ERROR : Not found"
+                    },
+                    "default": {
+                        "description": "unexpected error"
+                    }
+                }
+            }
+        },
+        "/samplePhpApi/products/delete.php?id={id}": {
+            "get": {
+                "tags": [
+                    "products"
+                ],
+                "summary": "delete products by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of record to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "404": {
+                        "description": "ERROR : Not found"
+                    },
+                    "default": {
+                        "description": "unexpected error"
+                    }
+                }
+            }
+        },
+        "/samplePhpApi/products/read.php?start={start}&length={length}": {
+            "get": {
+                "tags": [
+                    "products"
+                ],
+                "summary": "List products",
+                "parameters": [
+                    {
+                        "name": "start",
+                        "in": "path",
+                        "description": "start of records to display (zero based)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "length",
+                        "in": "path",
+                        "description": "length of records",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "404": {
+                        "description": "ERROR : Not found"
+                    },
+                    "default": {
+                        "description": "unexpected error"
+                    }
+                }
+            }
+        },
+        "/samplePhpApi/products/search.php?start={start}&length={length}&name={name}&minPrice={minPrice}&maxPrice={maxPrice}": {
+            "get": {
+                "tags": [
+                    "products"
+                ],
+                "summary": "search in products",
+                "parameters": [
+                    {
+                        "name": "start",
+                        "in": "path",
+                        "description": "start of records to display (zero based)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "length",
+                        "in": "path",
+                        "description": "length of records",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "search keyword",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "minPrice",
+                        "in": "path",
+                        "description": "minimum price",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "maxPrice",
+                        "in": "path",
+                        "description": "maximum price",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "404": {
+                        "description": "ERROR : Not found"
+                    },
+                    "default": {
+                        "description": "unexpected error"
+                    }
+                }
+            }
+        },
+        "/samplePhpApi/products/update.php?id={id}&name={name}&price={price}": {
+            "get": {
+                "tags": [
+                    "products"
+                ],
+                "summary": "edit products",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of record you want to edit",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "new name for this product",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "price",
+                        "in": "path",
+                        "description": "new price for this product",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "404": {
+                        "description": "ERROR : Not found"
+                    },
+                    "default": {
+                        "description": "unexpected error"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {},
+    "tags": [
+        {
+            "name": "products",
+            "description": "Acces to products list and do CRUD"
+        }
+    ]
+}
