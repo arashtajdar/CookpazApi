@@ -73,44 +73,45 @@
  *     )
  * )
  */
-header("Content-Type: application/json; charset=UTF-8");
+ function search(){
 
-include_once '../../config/db.php';
-include_once '../../entities/food.php';
+   $dbclass = new DatabaseClass();
+   $connection = $dbclass->connect();
 
-$dbclass = new DatabaseClass();
-$connection = $dbclass->connect();
+   $food = new food($connection);
 
-$food = new food($connection);
+   $error = array();
 
-$error = array();
+   try{
+   //    $id = (!empty($_GET['id']) && $_GET['id'] !== 'undefined') ? $_GET['id'] : null;
+   //    if(!$id){
+   //        throw new Exception("You should specify ID of food");
+   //    }
+       $recipes = '(1,2)';
+       $categories = null;
+       $result = $food->searchFood($recipes,$categories);
+       $res_count = $result->rowCount();
+       if(!$res_count){
+           throw new Exception("No result found !");
+       }
+       $resultList = array();
+       $resultList["body"] = array();
+       $resultList["ERROR"] = array();
+       $resultList["body"]["count"] = $res_count;
 
-try{
-//    $id = (!empty($_GET['id']) && $_GET['id'] !== 'undefined') ? $_GET['id'] : null;
-//    if(!$id){
-//        throw new Exception("You should specify ID of food");
-//    }
-    $recipes = '(1,2)';
-    $categories = null;
-    $result = $food->searchFood($recipes,$categories);
-    $res_count = $result->rowCount();
-    if(!$res_count){
-        throw new Exception("No result found !");
-    }
-    $resultList = array();
-    $resultList["body"] = array();
-    $resultList["body"]["count"] = $res_count;
+       while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+           array_push($resultList["body"], $row);
+       }
+       $resultList["ERROR"] = false;
 
-    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-        array_push($resultList["body"], $row);
-    }
+       return json_encode($resultList);
 
-    echo json_encode($resultList);
+   }catch (Exception $e){
+       array_push($error, $e->getMessage());
+       return json_encode(
+           array("ERROR" => $error)
+       );
+   }
 
-}catch (Exception $e){
-    array_push($error, $e->getMessage());
-    echo json_encode(
-        array("ERROR" => $error)
-    );
-}
 
+ }

@@ -73,42 +73,41 @@
  *     )
  * )
  */
-header("Content-Type: application/json; charset=UTF-8");
+function fetchSteps($id){
+  $dbclass = new DatabaseClass();
+  $connection = $dbclass->connect();
 
-include_once '../../config/db.php';
-include_once '../../entities/food.php';
+  $food = new food($connection);
 
-$dbclass = new DatabaseClass();
-$connection = $dbclass->connect();
+  $error = array();
 
-$food = new food($connection);
+  try{
+      $id = (!empty($id) && $id !== 'undefined') ? $id : null;
+      if(!$id){
+          throw new Exception("You should specify ID of food");
+      }
+      $steps = $food->fetchSteps($id);
+      $res_count = $steps->rowCount();
+      if(!$res_count){
+          throw new Exception("No steps found !");
+      }
+      $resultList = array();
+      $resultList["body"] = array();
+      $resultList["ERROR"] = array();
+      $resultList["body"]["count"] = $res_count;
 
-$error = array();
+      while ($row = $steps->fetch(PDO::FETCH_ASSOC)) {
+          array_push($resultList["body"], $row);
+      }
+      $resultList["ERROR"] = false;
+      return json_encode($resultList);
 
-try{
-    $id = (!empty($_GET['id']) && $_GET['id'] !== 'undefined') ? $_GET['id'] : null;
-    if(!$id){
-        throw new Exception("You should specify ID of food");
-    }
-    $steps = $food->fetchSteps($id);
-    $res_count = $steps->rowCount();
-    if(!$res_count){
-        throw new Exception("No steps found !");
-    }
-    $resultList = array();
-    $resultList["body"] = array();
-    $resultList["body"]["count"] = $res_count;
+  }catch (Exception $e){
+      array_push($error, $e->getMessage());
+      return json_encode(
+          array("ERROR" => $error)
+      );
+  }
 
-    while ($row = $steps->fetch(PDO::FETCH_ASSOC)) {
-        array_push($resultList["body"], $row);
-    }
 
-    echo json_encode($resultList);
-
-}catch (Exception $e){
-    array_push($error, $e->getMessage());
-    echo json_encode(
-        array("ERROR" => $error)
-    );
 }
-
