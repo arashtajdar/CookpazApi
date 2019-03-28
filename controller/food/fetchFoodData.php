@@ -100,8 +100,8 @@
             $foodData = array();
             $foodData["body"] = array();
             $foodData["ERROR"] = array();
-            $foodData["body"]["recipes"] = array();
             $foodData["body"]["data"] = array();
+            $foodData["body"]["recipes"] = array();
             $foodData["body"]["steps"] = array();
 
             while ($row = $Data->fetch(PDO::FETCH_ASSOC)) {

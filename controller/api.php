@@ -24,9 +24,9 @@ $api["services"] = array();
 $api["documentation"] = array();
 
 $api["body"] = array(
-    "TITLE" => "PHP SAMPLE API",
+    "TITLE" => "CookPaz",
     "VERSION" => "1.0.0",
-    "DESCRIPTION" => "This is a sample php api for Erply assignment",
+    "DESCRIPTION" => "...",
     "CONTACTME" => "arashtajdar@gmail.com"
 );
 

@@ -83,10 +83,7 @@
    $error = array();
 
    try{
-   //    $id = (!empty($_GET['id']) && $_GET['id'] !== 'undefined') ? $_GET['id'] : null;
-   //    if(!$id){
-   //        throw new Exception("You should specify ID of food");
-   //    }
+      // TODO: JSON request
        $recipes = '(1,2)';
        $categories = null;
        $result = $food->searchFood($recipes,$categories);

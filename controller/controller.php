@@ -7,5 +7,5 @@
  */
 
 require 'food/fetchFoodData.php';
-require 'food/fetchSteps.php';
+require 'step/fetchSteps.php';
 require 'food/search.php';
