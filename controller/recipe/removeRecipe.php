@@ -74,20 +74,19 @@
  * )
  */
 
-    function editRecipe($id,$recipeName) {
+    function removeRecipe($id) {
         $dbclass = new DatabaseClass();
         $connection = $dbclass->connect();
         $recipe = new recipe($connection);
         $error = array();
 
         try{
-            $edit = $recipe->edit($id,$recipeName);
-            $edit = array();
-            $edit["body"] = array();
-            $edit["body"]["ID"] = $id;
-            $edit["body"]["recipeName"] = $recipeName;
-            $edit["ERROR"] = false;
-            return json_encode($edit);
+            $remove = $recipe->remove($id);
+            $remove = array();
+            $remove["body"] = array();
+            $remove["body"]["ID"] = $id;
+            $remove["ERROR"] = false;
+            return json_encode($remove);
 
         }catch (Exception $e){
             array_push($error, $e->getMessage());
