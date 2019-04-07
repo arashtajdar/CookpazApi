@@ -73,7 +73,7 @@
  *     )
  * )
  */
-function fetchSteps($id){
+function reorderStep($stepId,$newOrder){
   $dbclass = new DatabaseClass();
   $connection = $dbclass->connect();
 
@@ -82,26 +82,14 @@ function fetchSteps($id){
   $error = array();
 
   try{
-      $id = (!empty($id) && $id !== 'undefined') ? $id : null;
-      if(!$id){
-          throw new Exception("You should specify ID of food");
-      }
-      $steps = $step->fetchSteps($id);
-      $res_count = $steps->rowCount();
-      if(!$res_count){
-          throw new Exception("No steps found !");
-      }
-      $resultList = array();
-      $resultList["body"] = array();
-      $resultList["ERROR"] = array();
-      $resultList["body"]["count"] = $res_count;
-
-      while ($row = $steps->fetch(PDO::FETCH_ASSOC)) {
-          array_push($resultList["body"], $row);
-      }
-      $resultList["ERROR"] = false;
-      return json_encode($resultList);
-
+      $editStep = $step->editOrder($stepId,$newOrder);
+      $edit = array();
+      $edit["body"] = array();
+      $edit["ERROR"] = array();
+      $edit["body"]["ID"] = $stepId;
+      $edit["body"]["NewOrder"] = $newOrder;
+      $edit["ERROR"] = false;
+      return json_encode($edit);
   }catch (Exception $e){
       array_push($error, $e->getMessage());
       return json_encode(

@@ -30,7 +30,7 @@ class food
     public function fetchRecipesById($id)
     {
         $query = "
-            SELECT 
+            SELECT
                 r.RECIPE_NAME,rf.RECIPE_VALUE,rf.RECIPE_UNIT
             FROM
                 recipe_and_food AS rf
@@ -50,11 +50,11 @@ class food
     public function fetchById($id)
     {
         $query = "
-            SELECT 
+            SELECT
                 f.FOOD_ID,f.FOOD_NAME,c.CATEGORY_NAME,c.CATEGORY_ID
             FROM
                 $this->food_table as f
-                INNER JOIN 
+                INNER JOIN
                 $this->categories_table as c ON f.CATEGORY_ID = c.CATEGORY_ID
             WHERE
                 FOOD_ID = $id
@@ -74,7 +74,7 @@ class food
         }
         $where .= '1=1';
         $query = "
-            SELECT 
+            SELECT
                 f.FOOD_ID,
                 f.FOOD_NAME,
                 f.RECIPE_COUNT,
@@ -92,24 +92,6 @@ class food
                 $where
             GROUP BY f.FOOD_ID
             order by PERCENTAGE DESC
-            ";
-
-        $result = $this->connection->prepare($query);
-        $result->execute();
-        return $result;
-    }
-    public function fetchSteps($id)
-    {
-
-        $query = "
-            SELECT 
-                s.STEP_ORDER,s.STEP_TEXT
-            FROM
-                $this->steps_table AS s
-                    INNER JOIN
-                $this->food_table AS f ON f.FOOD_ID = s.FOOD_ID
-                where f.FOOD_ID = $id
-                order by s.STEP_ORDER ASC
             ";
 
         $result = $this->connection->prepare($query);

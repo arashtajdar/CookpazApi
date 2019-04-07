@@ -20,3 +20,7 @@ require 'recipe/fetchAllRecipes.php';
 require 'recipe/removeRecipe.php';
 
 require 'step/fetchSteps.php';
+require 'step/removeStep.php';
+require 'step/addStep.php';
+require 'step/editStepText.php';
+require 'step/reorderStep.php';

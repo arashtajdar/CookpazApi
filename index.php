@@ -80,6 +80,30 @@ $app->get('/removeRecipe/{id}', function ($request, $response, $args) {
     ->withHeader('Content-Type', 'application/json')
     ->write($result);
 });
+$app->get('/removeStep/{id}', function ($request, $response, $args) {
+    $result = removeStep($args['id']);
+    return $response->withStatus(200)
+    ->withHeader('Content-Type', 'application/json')
+    ->write($result);
+});
+$app->get('/addStep/{stepText}', function ($request, $response, $args) {
+    $result = addStep($args['stepText']);
+    return $response->withStatus(200)
+    ->withHeader('Content-Type', 'application/json')
+    ->write($result);
+});
+$app->get('/editStepText/{stepId}/{stepText}', function ($request, $response, $args) {
+    $result = editStepText($args['stepId'],$args['stepText']);
+    return $response->withStatus(200)
+    ->withHeader('Content-Type', 'application/json')
+    ->write($result);
+});
+$app->get('/editStepOrder/{stepId}/{newOrder}', function ($request, $response, $args) {
+    $result = reorderStep($args['stepId'],$args['newOrder']);
+    return $response->withStatus(200)
+    ->withHeader('Content-Type', 'application/json')
+    ->write($result);
+});
 
 
 $app->run();
