@@ -1,12 +1,12 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "PHP SAMPLE API",
-        "description": "This is a sample php api for Erply assignment",
+        "title": "CookPaz API",
+        "description": "Api for CookPaz mobile and web app",
         "contact": {
             "email": "arashtajdar@gmail.com"
         },
-        "version": "1.0.0"
+        "version": "1.0"
     },
     "paths": {
         "/samplePhpApi/products/search.php?start={start}&length={length}&name={name}&minPrice={minPrice}&maxPrice={maxPrice}": {
@@ -83,12 +83,20 @@
     "definitions": {},
     "tags": [
         {
-            "name": "products",
-            "description": "Acces to products list and do CRUD"
+            "name": "category",
+            "description": "CRUD for category"
         },
         {
-            "name": "products",
-            "description": "Acces to products list and do CRUD"
+            "name": "food",
+            "description": "CRUD for food"
+        },
+        {
+            "name": "recipe",
+            "description": "CRUD for recipe"
+        },
+        {
+            "name": "step",
+            "description": "CRUD for step"
         }
     ]
 }

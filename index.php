@@ -12,6 +12,12 @@ $app = new Slim\App();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+$app->get('/', function ($request, $response, $args) {
+    $index = createIndex();
+    return $response->withStatus(200)
+    ->withHeader('Content-Type', 'application/json')
+    ->write($index);
+});
 $app->get('/fetchFoodData/{id}', function ($request, $response, $args) {
     $food = fetchFoodData($args['id']);
     return $response->withStatus(200)
@@ -26,7 +32,7 @@ $app->get('/fetchSteps/{id}', function ($request, $response, $args) {
     ->write($steps);
 });
 $app->get('/search', function ($request, $response, $args) {
-    $result = search($args['id']);
+    $result = search();
     return $response->withStatus(200)
     ->withHeader('Content-Type', 'application/json')
     ->write($result);

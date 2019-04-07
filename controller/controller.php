@@ -6,6 +6,8 @@
  * Time: 4:43 PM
  */
 
+require 'api.php';
+
 require 'category/addCategory.php';
 require 'category/editCategory.php';
 require 'category/fetchAllCategories.php';
