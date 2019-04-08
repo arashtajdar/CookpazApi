@@ -5,6 +5,7 @@ class DatabaseClass {
     private $host = "localhost";
     private $username = "root";
     private $pass = "11111111";
+//    private $pass = "";
     private $db = "cookpaz";
 
     public $connection;

@@ -10,11 +10,7 @@ class recipe
 {
 
     // Specify the table name
-    private $food_table = "foods";
-    private $categories_table = "categories";
     private $recipes_table = "recipes";
-    private $recipe_and_food_table = "recipe_and_food";
-    private $steps_table = "steps";
 
     //
     public $id;
@@ -51,6 +47,13 @@ class recipe
     public function remove($id)
     {
         $query = "DELETE FROM $this->recipes_table WHERE `RECIPE_ID` = $id";
+        $result = $this->connection->prepare($query);
+        $result->execute();
+        return $result;
+    }
+    public function search($keyword)
+    {
+        $query = "SELECT * FROM $this->recipes_table where `RECIPE_NAME` LIKE '%$keyword%'";
         $result = $this->connection->prepare($query);
         $result->execute();
         return $result;

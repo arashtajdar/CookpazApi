@@ -11,9 +11,6 @@ class step
 
     // Specify the table name
     private $food_table = "foods";
-    private $categories_table = "categories";
-    private $recipes_table = "recipes";
-    private $recipe_and_food_table = "recipe_and_food";
     private $steps_table = "steps";
 
     //

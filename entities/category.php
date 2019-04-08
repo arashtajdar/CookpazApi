@@ -52,5 +52,12 @@ class category
             $result->execute();
             return $result;
         }
+        public function search($keyword)
+        {
+            $query = "SELECT * FROM $this->categories_table where `CATEGORY_NAME` LIKE '%$keyword%'";
+            $result = $this->connection->prepare($query);
+            $result->execute();
+            return $result;
+        }
 
 }

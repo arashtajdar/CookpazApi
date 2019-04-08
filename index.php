@@ -110,6 +110,18 @@ $app->get('/editStepOrder/{stepId}/{newOrder}', function ($request, $response, $
     ->withHeader('Content-Type', 'application/json')
     ->write($result);
 });
+$app->get('/searchCategories/{keyword}', function ($request, $response, $args) {
+    $result = searchCategories($args['keyword']);
+    return $response->withStatus(200)
+    ->withHeader('Content-Type', 'application/json')
+    ->write($result);
+});
+$app->get('/searchRecipes/{keyword}', function ($request, $response, $args) {
+    $result = searchRecipes($args['keyword']);
+    return $response->withStatus(200)
+    ->withHeader('Content-Type', 'application/json')
+    ->write($result);
+});
 
 
 $app->run();

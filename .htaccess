@@ -3,3 +3,4 @@ RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.+)$ /CookpazApi/index.php [QSA,L]
+#RewriteRule ^(.+)$ /projects/CookpazApi/index.php [QSA,L]

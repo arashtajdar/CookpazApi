@@ -27,6 +27,10 @@ class food
         $this->connection = $conn;
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function fetchRecipesById($id)
     {
         $query = "
@@ -47,6 +51,11 @@ class food
         $result->execute();
         return $result;
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function fetchById($id)
     {
         $query = "
@@ -63,7 +72,13 @@ class food
         $result->execute();
         return $result;
     }
-    public function searchFood($recipes,$categories)
+
+    /**
+     * @param $recipes
+     * @param $categories
+     * @return mixed
+     */
+    public function searchFood($recipes, $categories)
     {
         $where = '';
         if($recipes){
